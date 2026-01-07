@@ -23,10 +23,17 @@ export default function LandingPage() {
 
   return (
     <main>
+      {/* Header */}
+      <header className="top-header">
+        <div className="logo">FlightWindow</div>
+        <a href="https://app.flightwindow.app/sign-in" className="sign-in-link">
+          Sign In
+        </a>
+      </header>
+
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
-          <div className="logo">FlightWindow</div>
           <h1>
             Never lose context in <span>multi-day drone missions</span>
           </h1>
@@ -51,36 +58,28 @@ export default function LandingPage() {
         </p>
         <div className="screenshots-grid">
           <div className="screenshot-card">
-            <div style={{ background: '#1e293b', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Dashboard Screenshot</span>
-            </div>
+            <img src="/screenshots/01-dashboard-dark.png" alt="FlightWindow Dashboard" />
             <div className="screenshot-card-content">
               <h3>Mission Dashboard</h3>
               <p>One view answers: Can I fly now? Can I finish today? When should I return?</p>
             </div>
           </div>
           <div className="screenshot-card">
-            <div style={{ background: '#1e293b', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Flight Windows Screenshot</span>
-            </div>
+            <img src="/screenshots/02-flight-windows-dark.png" alt="Smart Flight Windows" />
             <div className="screenshot-card-content">
               <h3>Smart Flight Windows</h3>
               <p>Find contiguous windows based on weather, daylight, and your mission requirements.</p>
             </div>
           </div>
           <div className="screenshot-card">
-            <div style={{ background: '#1e293b', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Mission Continuity Screenshot</span>
-            </div>
+            <img src="/screenshots/04-mission-continuity-dark.png" alt="Mission Continuity" />
             <div className="screenshot-card-content">
               <h3>Mission Continuity</h3>
               <p>Pause and resume with full context—waypoints, conditions, and visual references.</p>
             </div>
           </div>
           <div className="screenshot-card">
-            <div style={{ background: '#1e293b', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: '#64748b', fontSize: '0.875rem' }}>Decision Log Screenshot</span>
-            </div>
+            <img src="/screenshots/05-decision-log-dark.png" alt="Decision Log" />
             <div className="screenshot-card-content">
               <h3>Decision Log</h3>
               <p>Record go/no-go decisions with conditions snapshot. Export for compliance.</p>
