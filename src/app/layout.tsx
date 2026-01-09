@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: 'Never lose context in multi-day drone missions. Plan flight windows, pause/resume missions, and keep a decision log.',
   keywords: ['drone flight planning', 'UAV mission planning', 'drone weather windows', 'Part 107', 'drone pilot tools', 'multi-day drone missions'],
   robots: 'index, follow',
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/logo-icon.svg',
+  },
   openGraph: {
     title: 'FlightWindow - Smart Flight Windows for Drone Pilots',
     description: 'Never lose context in multi-day drone missions. Plan flight windows, pause/resume missions, and keep a decision log.',

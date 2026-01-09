@@ -118,7 +118,25 @@ export default function LandingPage() {
     <main>
       {/* Header */}
       <header className="top-header">
-        <div className="logo">FlightWindow</div>
+        <a href="/" className="logo">
+          <svg viewBox="0 0 200 50" fill="none" className="logo-svg">
+            {/* Icon */}
+            <g>
+              {/* Window frame */}
+              <rect x="4" y="4" width="42" height="42" rx="8" stroke="currentColor" strokeWidth="3" fill="none"/>
+              {/* Horizon line */}
+              <line x1="12" y1="32" x2="38" y2="32" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              {/* Drone body */}
+              <circle cx="25" cy="18" r="6" stroke="currentColor" strokeWidth="2" fill="none"/>
+              {/* Propeller left */}
+              <line x1="17" y1="18" x2="10" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              {/* Propeller right */}
+              <line x1="33" y1="18" x2="40" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </g>
+            {/* Wordmark */}
+            <text x="56" y="33" fontFamily="system-ui, -apple-system, sans-serif" fontSize="22" fontWeight="700" letterSpacing="-0.5" fill="currentColor">FlightWindow</text>
+          </svg>
+        </a>
         <a href="https://app.flightwindow.app/sign-in" className="sign-in-link">
           Sign In
         </a>

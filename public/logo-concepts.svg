@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <!-- Gradient for accent versions -->
+    <linearGradient id="cosmicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#0ea5e9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background for visibility -->
+  <rect width="800" height="600" fill="#0a0a1a"/>
+
+  <!-- Labels -->
+  <text x="100" y="40" fill="#64748b" font-family="system-ui" font-size="14" font-weight="600">CONCEPT A: Window + Drone Wing</text>
+  <text x="500" y="40" fill="#64748b" font-family="system-ui" font-size="14" font-weight="600">CONCEPT B: Horizon Window</text>
+  <text x="100" y="340" fill="#64748b" font-family="system-ui" font-size="14" font-weight="600">CONCEPT C: Flight Path Frame</text>
+  <text x="500" y="340" fill="#64748b" font-family="system-ui" font-size="14" font-weight="600">CONCEPT D: Abstract Propeller Window</text>
+
+  <!-- CONCEPT A: Window frame with drone wing cutting through -->
+  <g transform="translate(100, 80)">
+    <!-- Window frame -->
+    <rect x="20" y="20" width="80" height="80" rx="8" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+    <!-- Drone wing / flight line cutting through -->
+    <path d="M 0 60 Q 40 40, 60 60 Q 80 80, 120 55" fill="none" stroke="#f1f5f9" stroke-width="4" stroke-linecap="round"/>
+    <!-- Small drone body hint -->
+    <circle cx="60" cy="60" r="6" fill="#f1f5f9"/>
+
+    <!-- Wordmark -->
+    <text x="140" y="72" fill="#f1f5f9" font-family="system-ui" font-size="28" font-weight="700" letter-spacing="-0.5">FlightWindow</text>
+  </g>
+
+  <!-- CONCEPT A - Icon only version -->
+  <g transform="translate(100, 200)">
+    <rect x="10" y="10" width="50" height="50" rx="6" fill="none" stroke="#f1f5f9" stroke-width="3"/>
+    <path d="M 0 35 Q 25 20, 35 35 Q 45 50, 70 30" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="35" cy="35" r="4" fill="#f1f5f9"/>
+    <text x="85" y="45" fill="#64748b" font-family="system-ui" font-size="12">Icon only</text>
+  </g>
+
+  <!-- CONCEPT B: Window with horizon line and sky -->
+  <g transform="translate(500, 80)">
+    <!-- Rounded rectangle window -->
+    <rect x="20" y="20" width="80" height="80" rx="12" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+    <!-- Horizon line -->
+    <line x1="30" y1="65" x2="90" y2="65" stroke="#f1f5f9" stroke-width="2"/>
+    <!-- Sun/drone above horizon -->
+    <circle cx="60" cy="45" r="10" fill="none" stroke="#f1f5f9" stroke-width="2"/>
+    <!-- Small propeller hints -->
+    <line x1="48" y1="45" x2="42" y2="45" stroke="#f1f5f9" stroke-width="2" stroke-linecap="round"/>
+    <line x1="72" y1="45" x2="78" y2="45" stroke="#f1f5f9" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Wordmark -->
+    <text x="120" y="72" fill="#f1f5f9" font-family="system-ui" font-size="28" font-weight="700" letter-spacing="-0.5">FlightWindow</text>
+  </g>
+
+  <!-- CONCEPT B - Icon only version -->
+  <g transform="translate(500, 200)">
+    <rect x="10" y="10" width="50" height="50" rx="8" fill="none" stroke="#f1f5f9" stroke-width="2.5"/>
+    <line x1="17" y1="40" x2="53" y2="40" stroke="#f1f5f9" stroke-width="1.5"/>
+    <circle cx="35" cy="26" r="7" fill="none" stroke="#f1f5f9" stroke-width="1.5"/>
+    <line x1="26" y1="26" x2="21" y2="26" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="44" y1="26" x2="49" y2="26" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="75" y="40" fill="#64748b" font-family="system-ui" font-size="12">Icon only</text>
+  </g>
+
+  <!-- CONCEPT C: Rounded square with flight path -->
+  <g transform="translate(100, 380)">
+    <!-- Window frame with notch -->
+    <path d="M 28 20 H 92 Q 100 20, 100 28 V 92 Q 100 100, 92 100 H 28 Q 20 100, 20 92 V 28 Q 20 20, 28 20 Z" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+    <!-- Curved flight path -->
+    <path d="M 35 75 Q 50 45, 60 55 Q 70 65, 85 40" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-dasharray="0"/>
+    <!-- Arrow head at end of path -->
+    <path d="M 82 45 L 88 38 L 84 47" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Wordmark -->
+    <text x="120" y="72" fill="#f1f5f9" font-family="system-ui" font-size="28" font-weight="700" letter-spacing="-0.5">FlightWindow</text>
+  </g>
+
+  <!-- CONCEPT C - Icon only version -->
+  <g transform="translate(100, 500)">
+    <path d="M 18 10 H 52 Q 60 10, 60 18 V 52 Q 60 60, 52 60 H 18 Q 10 60, 10 52 V 18 Q 10 10, 18 10 Z" fill="none" stroke="#f1f5f9" stroke-width="2.5"/>
+    <path d="M 22 45 Q 32 25, 38 33 Q 44 41, 52 22" fill="none" stroke="#f1f5f9" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 50 25 L 54 20 L 51 28" fill="none" stroke="#f1f5f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="75" y="40" fill="#64748b" font-family="system-ui" font-size="12">Icon only</text>
+  </g>
+
+  <!-- CONCEPT D: Abstract propeller forming window corners -->
+  <g transform="translate(500, 380)">
+    <!-- Four propeller blades at corners suggesting a window -->
+    <g fill="#f1f5f9">
+      <!-- Top left propeller -->
+      <ellipse cx="32" cy="32" rx="12" ry="4" transform="rotate(-45 32 32)"/>
+      <!-- Top right propeller -->
+      <ellipse cx="88" cy="32" rx="12" ry="4" transform="rotate(45 88 32)"/>
+      <!-- Bottom left propeller -->
+      <ellipse cx="32" cy="88" rx="12" ry="4" transform="rotate(45 32 88)"/>
+      <!-- Bottom right propeller -->
+      <ellipse cx="88" cy="88" rx="12" ry="4" transform="rotate(-45 88 88)"/>
+    </g>
+    <!-- Central connecting lines forming window -->
+    <path d="M 40 32 H 80 M 88 40 V 80 M 80 88 H 40 M 32 80 V 40" fill="none" stroke="#f1f5f9" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Wordmark -->
+    <text x="120" y="72" fill="#f1f5f9" font-family="system-ui" font-size="28" font-weight="700" letter-spacing="-0.5">FlightWindow</text>
+  </g>
+
+  <!-- CONCEPT D - Icon only version -->
+  <g transform="translate(500, 500)">
+    <g fill="#f1f5f9">
+      <ellipse cx="18" cy="18" rx="8" ry="3" transform="rotate(-45 18 18)"/>
+      <ellipse cx="52" cy="18" rx="8" ry="3" transform="rotate(45 52 18)"/>
+      <ellipse cx="18" cy="52" rx="8" ry="3" transform="rotate(45 18 52)"/>
+      <ellipse cx="52" cy="52" rx="8" ry="3" transform="rotate(-45 52 52)"/>
+    </g>
+    <path d="M 24 18 H 46 M 52 24 V 46 M 46 52 H 24 M 18 46 V 24" fill="none" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <text x="75" y="40" fill="#64748b" font-family="system-ui" font-size="12">Icon only</text>
+  </g>
+
+</svg>
