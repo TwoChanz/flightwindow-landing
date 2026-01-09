@@ -7,8 +7,10 @@ export const metadata: Metadata = {
   description: 'Never lose context in multi-day drone missions. Plan flight windows, pause/resume missions, and keep a decision log.',
   keywords: ['drone flight planning', 'UAV mission planning', 'drone weather windows', 'Part 107', 'drone pilot tools', 'multi-day drone missions'],
   robots: 'index, follow',
+  metadataBase: new URL('https://flightwindow.app'),
   icons: {
     icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
     apple: '/logo-icon.svg',
   },
   openGraph: {
@@ -17,20 +19,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://flightwindow.app',
     siteName: 'FlightWindow',
-    images: [
-      {
-        url: 'https://flightwindow.app/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'FlightWindow - Smart Flight Windows for Drone Pilots',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'FlightWindow - Smart Flight Windows for Drone Pilots',
     description: 'Never lose context in multi-day drone missions.',
-    images: ['https://flightwindow.app/og-image.png'],
   },
 }
 
