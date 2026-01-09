@@ -2,23 +2,116 @@
 
 import { useState } from 'react'
 
+// Extend window type for gtag
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+  }
+}
+
+interface Screenshot {
+  src: string
+  alt: string
+  title: string
+  description: string
+  step: number
+  callout: string
+}
+
+const screenshots: Screenshot[] = [
+  {
+    src: '/screenshots/01-dashboard-dark.png',
+    alt: 'FlightWindow mission dashboard showing weather conditions, flight windows, and active drone missions',
+    title: 'Mission Dashboard',
+    description: 'One view answers: Can I fly now? Can I finish today? When should I return?',
+    step: 1,
+    callout: 'Real-time conditions',
+  },
+  {
+    src: '/screenshots/02-flight-windows-dark.png',
+    alt: 'Smart flight window calculator displaying optimal flying times based on weather and daylight',
+    title: 'Smart Flight Windows',
+    description: 'Find contiguous windows based on weather, daylight, and your mission requirements.',
+    step: 2,
+    callout: 'AI-powered suggestions',
+  },
+  {
+    src: '/screenshots/04-mission-continuity-dark.png',
+    alt: 'Mission continuity panel showing paused waypoints and visual reference photos for multi-day drone operations',
+    title: 'Mission Continuity',
+    description: 'Pause and resume with full context—waypoints, conditions, and visual references.',
+    step: 3,
+    callout: 'Never lose progress',
+  },
+  {
+    src: '/screenshots/05-decision-log-dark.png',
+    alt: 'Decision log interface with timestamped go/no-go decisions and weather condition snapshots for compliance',
+    title: 'Decision Log',
+    description: 'Record go/no-go decisions with conditions snapshot. Export for compliance.',
+    step: 4,
+    callout: 'Audit-ready exports',
+  },
+]
+
 export default function LandingPage() {
   const [email, setEmail] = useState('')
   const [droneType, setDroneType] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState('')
+  const [lightboxImage, setLightboxImage] = useState<Screenshot | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError('')
 
-    // TODO: Connect to your waitlist service (ConvertKit, Mailchimp, Supabase, etc.)
-    // For now, simulate a submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, droneType }),
+      })
 
-    console.log('Waitlist submission:', { email, droneType })
-    setIsSubmitted(true)
-    setIsSubmitting(false)
+      const data = await response.json()
+
+      if (!response.ok && response.status !== 200) {
+        throw new Error(data.error || 'Failed to join waitlist')
+      }
+
+      // Track successful conversion in GA4
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'waitlist_signup', {
+          event_category: 'conversion',
+          event_label: droneType || 'not_specified',
+        })
+      }
+
+      setIsSubmitted(true)
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+      setError(errorMessage)
+
+      // Track error in GA4
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'waitlist_signup_error', {
+          event_category: 'error',
+          event_label: errorMessage,
+        })
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const openLightbox = (screenshot: Screenshot) => {
+    setLightboxImage(screenshot)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeLightbox = () => {
+    setLightboxImage(null)
+    document.body.style.overflow = ''
   }
 
   return (
@@ -37,16 +130,44 @@ export default function LandingPage() {
           <h1>
             Never lose context in <span>multi-day drone missions</span>
           </h1>
-          <p className="hero-subtitle">
-            Plan flight windows, pause and resume missions with confidence, and keep a defensible decision log. Advisory support that respects pilot authority.
-          </p>
+
+          <ul className="hero-benefits">
+            <li>Find flight windows sized to your mission duration</li>
+            <li>Pause and resume with full context preserved</li>
+            <li>Keep defensible logs for every go/no-go decision</li>
+          </ul>
+
           <a href="#waitlist" className="cta-button">
-            Join Early Access
+            Get Early Access
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
-          <p className="hero-note">Free during beta. No credit card required.</p>
+
+          <div className="trust-badges">
+            <span className="trust-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Free during beta
+            </span>
+            <span className="trust-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              No credit card
+            </span>
+            <span className="trust-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Cancel anytime
+            </span>
+          </div>
+
+          <p className="social-proof">
+            Join 200+ drone pilots on the waitlist
+          </p>
         </div>
       </section>
 
@@ -56,37 +177,79 @@ export default function LandingPage() {
         <p className="screenshots-subtitle">
           Every feature designed around the workflows of professional drone pilots.
         </p>
+
+        <div className="workflow-indicator">
+          <span>Plan</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+          <span>Fly</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+          <span>Pause</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+          <span>Document</span>
+        </div>
+
         <div className="screenshots-grid">
-          <div className="screenshot-card">
-            <img src="/screenshots/01-dashboard-dark.png" alt="FlightWindow Dashboard" />
-            <div className="screenshot-card-content">
-              <h3>Mission Dashboard</h3>
-              <p>One view answers: Can I fly now? Can I finish today? When should I return?</p>
+          {screenshots.map((screenshot) => (
+            <div
+              key={screenshot.step}
+              className="screenshot-card"
+              onClick={() => openLightbox(screenshot)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && openLightbox(screenshot)}
+            >
+              <div className="screenshot-step">{screenshot.step}</div>
+              <div className="screenshot-callout">{screenshot.callout}</div>
+              <div className="device-frame">
+                <div className="device-notch"></div>
+                <img src={screenshot.src} alt={screenshot.alt} />
+              </div>
+              <div className="screenshot-card-content">
+                <h3>{screenshot.title}</h3>
+                <p>{screenshot.description}</p>
+              </div>
+              <div className="screenshot-expand-hint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 3 21 3 21 9" />
+                  <polyline points="9 21 3 21 3 15" />
+                  <line x1="21" y1="3" x2="14" y2="10" />
+                  <line x1="3" y1="21" x2="10" y2="14" />
+                </svg>
+                Click to enlarge
+              </div>
             </div>
-          </div>
-          <div className="screenshot-card">
-            <img src="/screenshots/02-flight-windows-dark.png" alt="Smart Flight Windows" />
-            <div className="screenshot-card-content">
-              <h3>Smart Flight Windows</h3>
-              <p>Find contiguous windows based on weather, daylight, and your mission requirements.</p>
+          ))}
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div className="lightbox-overlay" onClick={closeLightbox}>
+          <button className="lightbox-close" onClick={closeLightbox} aria-label="Close lightbox">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div className="lightbox-device-frame">
+              <div className="device-notch"></div>
+              <img src={lightboxImage.src} alt={lightboxImage.alt} />
             </div>
-          </div>
-          <div className="screenshot-card">
-            <img src="/screenshots/04-mission-continuity-dark.png" alt="Mission Continuity" />
-            <div className="screenshot-card-content">
-              <h3>Mission Continuity</h3>
-              <p>Pause and resume with full context—waypoints, conditions, and visual references.</p>
-            </div>
-          </div>
-          <div className="screenshot-card">
-            <img src="/screenshots/05-decision-log-dark.png" alt="Decision Log" />
-            <div className="screenshot-card-content">
-              <h3>Decision Log</h3>
-              <p>Record go/no-go decisions with conditions snapshot. Export for compliance.</p>
+            <div className="lightbox-info">
+              <div className="lightbox-step">Step {lightboxImage.step}</div>
+              <h3>{lightboxImage.title}</h3>
+              <p>{lightboxImage.description}</p>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       {/* Benefits Section */}
       <section className="benefits">
@@ -138,34 +301,59 @@ export default function LandingPage() {
         <div className="waitlist-content">
           {isSubmitted ? (
             <div className="success-message">
+              <div className="success-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
               <h3>You're on the list!</h3>
               <p>We'll reach out soon with early access. Check your inbox for a welcome email.</p>
             </div>
           ) : (
             <>
+              <div className="waitlist-urgency">Limited beta spots available</div>
               <h2>Get Early Access</h2>
               <p className="waitlist-subtitle">
-                Join the waitlist and be first to try FlightWindow when we launch.
+                Be among the first pilots to try FlightWindow when we launch.
               </p>
               <form className="waitlist-form" onSubmit={handleSubmit}>
+                <label htmlFor="email" className="sr-only">Email address</label>
                 <input
+                  id="email"
+                  name="email"
                   type="email"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  aria-required="true"
+                  aria-label="Email address for waitlist signup"
                 />
+                <label htmlFor="droneType" className="sr-only">Drone type (optional)</label>
                 <input
+                  id="droneType"
+                  name="droneType"
                   type="text"
                   placeholder="What drone do you fly? (optional)"
                   value={droneType}
                   onChange={(e) => setDroneType(e.target.value)}
+                  aria-label="What drone do you fly"
                 />
+                {error && (
+                  <p className="form-error" role="alert">{error}</p>
+                )}
                 <button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                  {isSubmitting ? 'Reserving...' : 'Reserve My Spot'}
                 </button>
               </form>
-              <p className="waitlist-note">No spam. Unsubscribe anytime.</p>
+              <p className="waitlist-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                We respect your privacy. No spam, ever.
+              </p>
             </>
           )}
         </div>
